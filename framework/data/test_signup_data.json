@@ -1,11 +1,13 @@
 {
   "name": "test_name",
   "email": "test_email@test.test",
+  "password": "test_password",
   "firstName": "first_test_name",
   "lastName": "last_test_name",
   "address1": "test_address",
   "country": "Canada",
   "state": "test_state",
+  "city":"test_sity",
   "zipCode": "test_zip_code",
   "mobileNumber": "test_mobile"
 }

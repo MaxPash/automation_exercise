@@ -6,3 +6,4 @@ class AccountCreatedPage:
 
         self.account_created_msg = page.locator("[data-qa='account-created']")
         self.continue_button = page.locator("[data-qa='continue-button']")
+

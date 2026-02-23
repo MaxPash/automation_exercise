@@ -3,6 +3,7 @@ from playwright.sync_api import Page
 class LoginPage(Page):
     def __init__(self, page: Page):
         self.page = page
+        self.signup_login_button = page.get_by_role("link", name="Signup / Login")
 
         # Log in
         self.login_email_input = page.locator("[data-qa='login-email']")
@@ -31,3 +32,6 @@ class LoginPage(Page):
 
     def sign_up(self):
         self.signup_button.click()
+
+    def go_to_login_page(self):
+        self.signup_login_button.click()

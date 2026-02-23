@@ -5,6 +5,7 @@ class BasePage:
         self.page = page
         self.accept_cookies_btn = page.get_by_role("button", name="Consent")
         self.delete_account_btn = page.get_by_role("listitem").filter(has_text="Delete Account")
+        self.close_add_btn = page.locator("iframe[name=\"aswift_2\"]").content_frame.locator("iframe[name=\"ad_iframe\"]").content_frame.get_by_role("button", name="Close ad")
 
     def navigate(self, url):
         self.page.goto(url)
@@ -23,5 +24,10 @@ class BasePage:
 
     def delete_account(self):
         self.delete_account_btn.click()
+
+    def close_add(self):
+        self.close_add_btn.click()
+
+
 
     

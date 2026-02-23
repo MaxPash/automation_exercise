@@ -13,11 +13,12 @@ class SignupPage(Page):
         self.password_input = page.locator("[data-qa='password']")
         self.first_name_input = page.locator("[data-qa='first_name']")
         self.last_name_input = page.locator("[data-qa='last_name']")
-        self.address1_input = page.locator("[data-qa='address1']")
+        self.address1_input = page.locator("[data-qa='address']")
         self.country_select = page.locator("[data-qa='country']")
         self.state_input = page.locator("[data-qa='state']")
         self.zip_code_input = page.locator("[data-qa='zipcode']")
         self.mobile_input = page.locator("[data-qa='mobile_number']")
+        self.city_input = page.locator("[data-qa='city']")
 
         # buttons
         self.submit_button = page.locator("[data-qa='create-account']")
@@ -42,6 +43,9 @@ class SignupPage(Page):
 
     def fill_state(self, state: str):
         self.state_input.fill(state)
+
+    def fill_city(self, city: str):
+        self.city_input.fill(city)
 
     def fill_zip_code(self, zip_code: str):
         self.zip_code_input.fill(zip_code)
