@@ -42,23 +42,17 @@ def test_register_user(pages):
 
     expect(base_page.page).to_have_title("Automation Exercise")
 
-
     login_page.go_to_login_page()
     expect(login_page.page).to_have_title("Automation Exercise - Signup / Login")
-    logging.info(f"on login page: {base_page.get_url()}")
 
-
-    expect(login_page.signup_name).to_be_visible()
     login_page.fill_sign_up_name(new_name)
-
-    expect(login_page.signup_email).to_be_visible()
     login_page.fill_sign_up_email(new_email)
+    logging.info(f"filled login data on page: {base_page.get_url()}")
 
     expect(login_page.signup_button).to_be_enabled()
     login_page.sign_up()
 
     expect(signup_page.page).to_have_title("Automation Exercise - Signup")
-    logging.info(f"on signup page: {base_page.get_url()}")
 
     signup_page.fill_password(new_password)
     signup_page.fill_first_name(new_first_name)
@@ -69,6 +63,7 @@ def test_register_user(pages):
     signup_page.fill_city(new_city)
     signup_page.fill_zip_code(new_zip_code)
     signup_page.fill_mobile(new_mobile)
+    logging.info(f"filled sign up data on page: {base_page.get_url()}")
 
     expect(signup_page.submit_button).to_be_enabled()
     signup_page.create_account()
