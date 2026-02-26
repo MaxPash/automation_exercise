@@ -22,8 +22,10 @@ class BasePage:
         try:
             self.accept_cookies_btn.click(timeout=timeout)
             logging.info("Cookie banner accepted")
+            return True
         except PlaywrightTimeoutError:
             logging.info("No cookie banner found")
+            return False
 
 
     def check_logged_in_name(self, name: str):
