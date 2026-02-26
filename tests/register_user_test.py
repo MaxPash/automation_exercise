@@ -47,7 +47,7 @@ def test_register_user(pages):
 
     login_page.fill_sign_up_name(new_name)
     login_page.fill_sign_up_email(new_email)
-    logging.info(f"filled login data on page: {base_page.get_url()}")
+    logging.info(f"filled sign up data on page: {base_page.get_url()}")
 
     expect(login_page.signup_button).to_be_enabled()
     login_page.sign_up()
