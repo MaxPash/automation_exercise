@@ -19,7 +19,7 @@ class BasePage:
         return self.page.url
 
     def accept_cookies(self, timeout: int = 3000 ):
-        try
+        try:
             self.accept_cookies_btn.click(timeout=timeout)
             logging.info("Cookie banner accepted")
         except PlaywrightTimeoutError:
