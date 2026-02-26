@@ -1,0 +1,39 @@
+name: Python Playwright Tests
+
+on:
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.14'
+
+      - name: Install pip3
+        run: sudo apt-get install python3-pip
+
+      - name: Install dependencies
+        run: |  
+          pip3 install --upgrade pip  
+          pip3 install -r requirements.txt  
+
+      - name: Install Playwright and dependencies
+        run: |  
+          pip3 install pytest-playwright  
+          python3 -m playwright install chromium
+
+      - name: Run tests
+        run: pytest
+
+      - name: Upload test results
+        uses: actions/upload-artifact@v3
+        with:
+          name: pytest-results
+          path: test-results/*
