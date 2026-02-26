@@ -1,4 +1,3 @@
-import logging
 from playwright.sync_api import Page
 from playwright.sync_api import TimeoutError as PlaywrightTimeoutError
 
@@ -21,10 +20,8 @@ class BasePage:
     def accept_cookies(self, timeout: int = 3000 ):
         try:
             self.accept_cookies_btn.click(timeout=timeout)
-            logging.info("Cookie banner accepted")
             return True
         except PlaywrightTimeoutError:
-            logging.info("No cookie banner found")
             return False
 
 

@@ -34,9 +34,13 @@ def test_register_user(pages):
 
 
     base_page.navigate(url)
-    base_page.accept_cookies()
+
+    if base_page.accept_cookies():
+        logging.info("Cookies accepted")
+    else:
+        logging.info("No cookie banner present")
+
     expect(base_page.page).to_have_title("Automation Exercise")
-    logging.info("cookies accepted")
 
 
     login_page.go_to_login_page()
