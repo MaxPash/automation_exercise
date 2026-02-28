@@ -1,5 +1,8 @@
+import logging
 from playwright.sync_api import Page
 from playwright.sync_api import TimeoutError as PlaywrightTimeoutError
+from playwright.sync_api import expect
+
 
 class BasePage:
     def __init__(self, page: Page):
@@ -24,6 +27,12 @@ class BasePage:
         except PlaywrightTimeoutError:
             return False
 
+    def handle_cookies(self):
+        try:
+            self.accept_cookies_btn.click(timeout=3000)
+            logging.info("Cookies accepted")
+        except PlaywrightTimeoutError:
+            logging.info("No cookie banner present")
 
     def check_logged_in_name(self, name: str):
         return self.page.get_by_role("listitem").filter(has_text=f"Logged in as {name}")
@@ -34,6 +43,8 @@ class BasePage:
     def close_add(self):
         self.close_add_btn.click()
 
-
+    def should_have_base_title(self):
+        # check page title
+        expect(self.page).to_have_title("Automation Exercise")
 
     

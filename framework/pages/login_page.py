@@ -1,4 +1,5 @@
 from playwright.sync_api import Page
+from playwright.sync_api import expect
 
 class LoginPage(Page):
     def __init__(self, page: Page):
@@ -15,8 +16,8 @@ class LoginPage(Page):
         self.signup_email = page.locator("[data-qa='signup-email']")
         self.signup_button = page.locator("[data-qa='signup-button']")
 
-    def fill_login_email(self, name):
-        self.login_email_input.fill(name)
+    def fill_login_email(self, email):
+        self.login_email_input.fill(email)
 
     def fill_login_password(self, password):
         self.login_password_input.fill(password)
@@ -35,3 +36,7 @@ class LoginPage(Page):
 
     def go_to_login_page(self):
         self.signup_login_button.click()
+
+    def should_have_login_title(self):
+        # check page title
+        expect(self.page).to_have_title("Automation Exercise - Signup / Login")

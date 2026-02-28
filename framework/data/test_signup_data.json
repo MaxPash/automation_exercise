@@ -2,12 +2,18 @@
   "name": "test_name",
   "email": "test_email@test.test",
   "password": "test_password",
-  "firstName": "first_test_name",
-  "lastName": "last_test_name",
+  "title": "Mr",
+  "birth_date": "10",
+  "birth_month": "5",
+  "birth_year": "1995",
+  "firstname": "first_test_name",
+  "lastname": "last_test_name",
+  "company": "test_company",
   "address1": "test_address",
+  "address2": "test_address2",
   "country": "Canada",
+  "zipcode": "12345",
   "state": "test_state",
-  "city":"test_sity",
-  "zipCode": "test_zip_code",
-  "mobileNumber": "test_mobile"
+  "city": "test_city",
+  "mobile_number": "1234567890"
 }

@@ -1,4 +1,5 @@
 from playwright.sync_api import Page
+from playwright.sync_api import expect
 
 class SignupPage(Page):
     def __init__(self, page: Page):
@@ -56,4 +57,5 @@ class SignupPage(Page):
     def create_account(self):
         self.submit_button.click()
 
-
+    def should_have_signup_title(self):
+        expect(self.page).to_have_title("Automation Exercise - Signup")

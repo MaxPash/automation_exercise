@@ -1,5 +1,6 @@
 import json
 import os
+import time
 
 
 def load_signup_data(key):
@@ -12,3 +13,7 @@ def load_signup_data(key):
         data = json.load(file)
 
     return data[key]
+
+def generate_email():
+    timestamp = int(time.time())
+    return f"test_{timestamp}@test.test"
