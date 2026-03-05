@@ -43,3 +43,6 @@ class LoginPage(BasePage):
 
     def get_error_message(self) -> str:
         return self._error_msg.text_content()
+
+    def should_show_login_page(self) -> None:
+        expect(self.page).to_have_title("Automation Exercise - Signup / Login")
