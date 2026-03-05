@@ -19,6 +19,7 @@ class SignupPage(BasePage):
         self._mobile_input = page.locator("[data-qa='mobile_number']")
         self._city_input = page.locator("[data-qa='city']")
         self._submit_button = page.locator("[data-qa='create-account']")
+        self._error_msg = page.locator("p").filter(has_text="exist!")
 
     def should_be_opened(self) -> None:
         expect(self.page).to_have_title("Automation Exercise - Signup")
@@ -38,3 +39,9 @@ class SignupPage(BasePage):
     def submit(self) -> None:
         expect(self._submit_button).to_be_enabled()
         self._submit_button.click()
+
+    def should_show_error_message(self) -> None:
+        expect(self._error_msg).to_be_visible()
+
+    def get_error_message(self) -> str:
+        return self._error_msg.text_content()
