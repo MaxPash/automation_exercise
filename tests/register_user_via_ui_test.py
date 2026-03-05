@@ -4,7 +4,7 @@ import logging
 def test_register_user(pages, url, signup_data):
     data = signup_data
 
-    logging.info("Starting test: register user")
+    logging.info("Starting test")
     logging.info("URL: %s", url)
 
     # Given: Open home, login page and start signup

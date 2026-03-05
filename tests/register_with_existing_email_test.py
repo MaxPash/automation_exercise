@@ -19,6 +19,6 @@ def test_register_with_existing_email(pages, api_user_flows: ApiUserFlows, signu
     error_msg = pages.signup.get_error_message()
     logging.info("Error message: %s", error_msg)
     
-    # Clean up
+    # Finally: Delete user via API
     api_user_flows.delete_user(email, password)
     

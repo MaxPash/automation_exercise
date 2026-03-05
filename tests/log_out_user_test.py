@@ -21,6 +21,7 @@ def test_log_out_user(pages, api_user_flows: ApiUserFlows, signup_payload: dict,
     pages.login.should_show_login_page()
     logging.info("User on log in page")
     
-    #Clean up
+    # Finally: Delete user via API
     api_user_flows.delete_user(email, password)
+    
     
