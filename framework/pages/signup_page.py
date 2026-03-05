@@ -24,7 +24,7 @@ class SignupPage(BasePage):
         expect(self.page).to_have_title("Automation Exercise - Signup")
 
     def fill_required_fields(self, data: dict) -> None:
-        """Заполнить форму из словаря с ключами как в test_signup_data.json."""
+        """Fill form from dictionary with keys as in test_signup_data.json."""
         self._password_input.fill(data["password"])
         self._first_name_input.fill(data["firstname"])
         self._last_name_input.fill(data["lastname"])

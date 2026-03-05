@@ -15,7 +15,7 @@ class LoginPage(BasePage):
         self._signup_button = page.locator("[data-qa='signup-button']")
 
     def open(self) -> None:
-        """Перейти на страницу логина и проверить заголовок."""
+        """Navigate to login page and check title."""
         self._signup_login_button.click()
         expect(self.page).to_have_title("Automation Exercise - Signup / Login")
 
@@ -31,7 +31,7 @@ class LoginPage(BasePage):
         self._login_button.click()
 
     def start_signup(self, name: str, email: str) -> None:
-        """Заполнить имя и email и нажать Signup."""
+        """Fill name and email and click Signup."""
         self._signup_name_input.fill(name)
         self._signup_email_input.fill(email)
         expect(self._signup_button).to_be_enabled()

@@ -21,7 +21,7 @@ class BasePage:
         return self.page.url
 
     def open_home(self, url: str) -> None:
-        """Открыть главную, принять куки и проверить заголовок."""
+        """Open home, accept cookies and check title."""
         self.navigate(url)
         self.handle_cookies()
         self.should_have_base_title()
@@ -34,7 +34,7 @@ class BasePage:
             logging.info("No cookie banner present")
 
     def should_show_logged_in_name(self, name: str) -> None:
-        """Проверить, что отображается 'Logged in as {name}'."""
+        """Check that 'Logged in as {name}' is displayed."""
         locator = self.page.get_by_role("listitem").filter(has_text=f"Logged in as {name}")
         expect(locator).to_be_visible()
 

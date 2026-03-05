@@ -13,7 +13,7 @@ class AccountCreatedPage(BasePage):
         expect(self.page).to_have_title("Automation Exercise - Account Created")
 
     def should_show_account_created_and_continue(self) -> None:
-        """Проверить экран и нажать Continue."""
+        """Check account created message and click Continue."""
         self.should_have_account_created_title()
         expect(self._account_created_msg).to_be_visible()
         expect(self._continue_button).to_be_enabled()

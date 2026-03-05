@@ -13,7 +13,7 @@ def url() -> str:
 
 @pytest.fixture
 def signup_data() -> dict:
-    """Данные для регистрации с уникальным email."""
+    """Data for registration with unique email."""
     data = load_signup_payload()
     data["email"] = generate_email()
     return data

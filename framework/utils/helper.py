@@ -13,7 +13,7 @@ def load_signup_data(key):
 
 
 def load_signup_payload() -> dict:
-    """Загрузить весь JSON с данными для регистрации."""
+    """Load all JSON with data for registration."""
     json_path = Path(__file__).resolve().parent.parent / "data" / "test_signup_data.json"
     with json_path.open(encoding="utf-8") as f:
         return json.load(f)

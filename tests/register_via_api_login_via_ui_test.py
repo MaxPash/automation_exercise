@@ -15,18 +15,18 @@ def test_api_create_ui_login_delete(pages, api_context, url):
     payload["email"] = email
     password = payload["password"]
     name = payload["name"]
-
+    # Given: Create user via API
     create_response = user_api.create_user(payload)
     assert create_response.json()["responseCode"] == 201
     logging.info("account created with name: %s", name)
-
-    try:
-        pages.base.open_home(url)
-        pages.login.open()
-        pages.login.log_in(email, password)
-        pages.base.should_show_logged_in_name(name)
-        logging.info("account name verified: %s", name)
-    finally:
-        delete_response = user_api.delete_user(email, password)
-        assert delete_response.json()["responseCode"] == 200
-        logging.info("account deleted")
+    # When: Login via UI
+    pages.base.open_home(url)
+    pages.login.open()
+    pages.login.log_in(email, password)
+    # Then: Verify logged in name
+    pages.base.should_show_logged_in_name(name)
+    logging.info("account name verified: %s", name)
+    # Finally: Delete user via API
+    delete_response = user_api.delete_user(email, password)
+    assert delete_response.json()["responseCode"] == 200
+    logging.info("account deleted")

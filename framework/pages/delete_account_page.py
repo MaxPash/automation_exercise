@@ -10,7 +10,7 @@ class DeleteAccountPage(BasePage):
         self._continue_button = page.locator("[data-qa='continue-button']")
 
     def should_show_deleted_and_continue(self) -> None:
-        """Проверить сообщение об удалении и нажать Continue."""
+        """Check account deleted message and click Continue."""
         expect(self._account_deleted_msg).to_be_visible()
         expect(self._continue_button).to_be_enabled()
         self._continue_button.click()
