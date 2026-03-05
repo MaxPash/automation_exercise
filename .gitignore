@@ -9,7 +9,7 @@ __pycache__/
 
 # Pytest
 .pytest_cache/
-pytest.ini
+pytest.local.ini
 
 # Playwright
 test-results/
