@@ -1,61 +1,40 @@
-from playwright.sync_api import Page
-from playwright.sync_api import expect
+from playwright.sync_api import Page, expect
 
-class SignupPage(Page):
+from framework.pages.base_page import BasePage
+
+
+class SignupPage(BasePage):
     def __init__(self, page: Page):
-        self.page = page
+        super().__init__(page)
+        self._title_mr_radio = page.locator("[id='uniform-id_gender1']")
+        self._title_mrs_radio = page.locator("[id='uniform-id_gender2']")
+        self._name_input = page.locator("[data-qa='name']")
+        self._password_input = page.locator("[data-qa='password']")
+        self._first_name_input = page.locator("[data-qa='first_name']")
+        self._last_name_input = page.locator("[data-qa='last_name']")
+        self._address1_input = page.locator("[data-qa='address']")
+        self._country_select = page.locator("[data-qa='country']")
+        self._state_input = page.locator("[data-qa='state']")
+        self._zip_code_input = page.locator("[data-qa='zipcode']")
+        self._mobile_input = page.locator("[data-qa='mobile_number']")
+        self._city_input = page.locator("[data-qa='city']")
+        self._submit_button = page.locator("[data-qa='create-account']")
 
-        # optional data
-        self.title_mr_radio = page.locator("[id='uniform-id_gender1']")
-        self.title_mrs_radio = page.locator("[id='uniform-id_gender2']")
-
-        # required data
-        self.name_input = page.locator("[data-qa='name']")
-        self.password_input = page.locator("[data-qa='password']")
-        self.first_name_input = page.locator("[data-qa='first_name']")
-        self.last_name_input = page.locator("[data-qa='last_name']")
-        self.address1_input = page.locator("[data-qa='address']")
-        self.country_select = page.locator("[data-qa='country']")
-        self.state_input = page.locator("[data-qa='state']")
-        self.zip_code_input = page.locator("[data-qa='zipcode']")
-        self.mobile_input = page.locator("[data-qa='mobile_number']")
-        self.city_input = page.locator("[data-qa='city']")
-
-        # buttons
-        self.submit_button = page.locator("[data-qa='create-account']")
-
-    def fill_name(self, name: str):
-        self.name_input.fill(name)
-
-    def fill_password(self, password: str):
-        self.password_input.fill(password)
-
-    def fill_first_name(self, first_name: str):
-        self.first_name_input.fill(first_name)
-
-    def fill_last_name(self, last_name: str):
-        self.last_name_input.fill(last_name)
-
-    def fill_address1(self, address: str):
-        self.address1_input.fill(address)
-
-    def select_country(self, country: str):
-        self.country_select.select_option(country)
-
-    def fill_state(self, state: str):
-        self.state_input.fill(state)
-
-    def fill_city(self, city: str):
-        self.city_input.fill(city)
-
-    def fill_zip_code(self, zip_code: str):
-        self.zip_code_input.fill(zip_code)
-
-    def fill_mobile(self, mobile: str):
-        self.mobile_input.fill(mobile)
-
-    def create_account(self):
-        self.submit_button.click()
-
-    def should_have_signup_title(self):
+    def should_be_opened(self) -> None:
         expect(self.page).to_have_title("Automation Exercise - Signup")
+
+    def fill_required_fields(self, data: dict) -> None:
+        """Заполнить форму из словаря с ключами как в test_signup_data.json."""
+        self._password_input.fill(data["password"])
+        self._first_name_input.fill(data["firstname"])
+        self._last_name_input.fill(data["lastname"])
+        self._address1_input.fill(data["address1"])
+        self._country_select.select_option(data["country"])
+        self._state_input.fill(data["state"])
+        self._city_input.fill(data["city"])
+        self._zip_code_input.fill(data["zipcode"])
+        self._mobile_input.fill(data["mobile_number"])
+
+    def submit(self) -> None:
+        expect(self._submit_button).to_be_enabled()
+        self._submit_button.click()

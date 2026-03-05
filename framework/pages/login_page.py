@@ -1,42 +1,38 @@
-from playwright.sync_api import Page
-from playwright.sync_api import expect
+from playwright.sync_api import Page, expect
 
-class LoginPage(Page):
+from framework.pages.base_page import BasePage
+
+
+class LoginPage(BasePage):
     def __init__(self, page: Page):
-        self.page = page
-        self.signup_login_button = page.get_by_role("link", name="Signup / Login")
+        super().__init__(page)
+        self._signup_login_button = page.get_by_role("link", name="Signup / Login")
+        self._login_email_input = page.locator("[data-qa='login-email']")
+        self._login_password_input = page.locator("[data-qa='login-password']")
+        self._login_button = page.locator("[data-qa='login-button']")
+        self._signup_name_input = page.locator("[data-qa='signup-name']")
+        self._signup_email_input = page.locator("[data-qa='signup-email']")
+        self._signup_button = page.locator("[data-qa='signup-button']")
 
-        # Log in
-        self.login_email_input = page.locator("[data-qa='login-email']")
-        self.login_password_input = page.locator("[data-qa='login-password']")
-        self.login_button = page.locator("[data-qa='login-button']")
-
-        #Sign up
-        self.signup_name = page.locator("[data-qa='signup-name']")
-        self.signup_email = page.locator("[data-qa='signup-email']")
-        self.signup_button = page.locator("[data-qa='signup-button']")
-
-    def fill_login_email(self, email):
-        self.login_email_input.fill(email)
-
-    def fill_login_password(self, password):
-        self.login_password_input.fill(password)
-
-    def log_in(self):
-        self.login_button.click()
-
-    def fill_sign_up_name(self, name):
-        self.signup_name.fill(name)
-
-    def fill_sign_up_email(self, email):
-        self.signup_email.fill(email)
-
-    def sign_up(self):
-        self.signup_button.click()
-
-    def go_to_login_page(self):
-        self.signup_login_button.click()
-
-    def should_have_login_title(self):
-        # check page title
+    def open(self) -> None:
+        """Перейти на страницу логина и проверить заголовок."""
+        self._signup_login_button.click()
         expect(self.page).to_have_title("Automation Exercise - Signup / Login")
+
+    def fill_login_email(self, email: str) -> None:
+        self._login_email_input.fill(email)
+
+    def fill_login_password(self, password: str) -> None:
+        self._login_password_input.fill(password)
+
+    def log_in(self, email: str, password: str) -> None:
+        self.fill_login_email(email)
+        self.fill_login_password(password)
+        self._login_button.click()
+
+    def start_signup(self, name: str, email: str) -> None:
+        """Заполнить имя и email и нажать Signup."""
+        self._signup_name_input.fill(name)
+        self._signup_email_input.fill(email)
+        expect(self._signup_button).to_be_enabled()
+        self._signup_button.click()
