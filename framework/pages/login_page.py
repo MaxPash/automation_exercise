@@ -13,7 +13,8 @@ class LoginPage(BasePage):
         self._signup_name_input = page.locator("[data-qa='signup-name']")
         self._signup_email_input = page.locator("[data-qa='signup-email']")
         self._signup_button = page.locator("[data-qa='signup-button']")
-
+        self._error_msg = page.locator("p").filter(has_text="incorrect")
+    
     def open(self) -> None:
         """Navigate to login page and check title."""
         self._signup_login_button.click()
@@ -36,3 +37,9 @@ class LoginPage(BasePage):
         self._signup_email_input.fill(email)
         expect(self._signup_button).to_be_enabled()
         self._signup_button.click()
+
+    def should_show_error_message(self) -> None:
+        expect(self._error_msg).to_be_visible()
+
+    def get_error_message(self) -> str:
+        return self._error_msg.text_content()
