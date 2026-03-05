@@ -1,29 +1,19 @@
-import json
 import logging
 
-from framework.api.user_api import UserAPI
-from framework.utils.helper import generate_email
+from framework.flows.api_user_flows import ApiUserFlows
 
-def test_user_lifecycle(api_context):
 
-    user_api = UserAPI(api_context)
-
-    with open("framework/data/test_signup_data.json") as f:
-        payload = json.load(f)
-
-    email = generate_email()
-    password = payload["password"]
-    payload["email"] = email
+def test_user_lifecycle(api_user_flows: ApiUserFlows, signup_payload: dict):
+    payload = signup_payload
 
     # Given: Create user via API
-    create_response = user_api.create_user(payload)
-    assert create_response.json()["responseCode"] == 201
-    logging.info(f"User created with email: {email}")
+    email, password = api_user_flows.create_unique_user(payload)
+    logging.info("User created with email: %s", email)
+
     # When: Verify login via API
-    login_response = user_api.verify_login(email, password)
-    assert login_response.json()["responseCode"] == 200
-    logging.info(f"User verified email: {email}")
+    api_user_flows.verify_login(email, password)
+    logging.info("User verified email: %s", email)
+
     # Finally: Delete user via API
-    delete_response = user_api.delete_user(email, password)
-    assert delete_response.json()["responseCode"] == 200
-    logging.info(f"User deleted with email: {email}")
+    api_user_flows.delete_user(email, password)
+    logging.info("User deleted with email: %s", email)
