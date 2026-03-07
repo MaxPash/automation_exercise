@@ -1,6 +1,7 @@
 import json
 import os
 import time
+import uuid
 from pathlib import Path
 
 
@@ -21,4 +22,5 @@ def load_signup_payload() -> dict:
 
 def generate_email():
     timestamp = int(time.time())
-    return f"test_{timestamp}@test.test"
+    unique_id = uuid.uuid4().hex[:8]
+    return f"test_user_{timestamp}_{unique_id}@test.test"
