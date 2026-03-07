@@ -61,3 +61,86 @@ To see real test executions:
 3. Review logs for dependency installation and test execution.
 
 This demonstrates how the automation framework can be executed in a **CI environment**, ensuring that tests run automatically on each workflow trigger.
+
+
+## Development Roadmap
+
+This framework is continuously evolving to demonstrate additional automation engineering practices commonly used in production QA environments.
+
+The following improvements are planned as part of the framework development:
+
+### 1. Test Data Factory
+Introduce a centralized test data generation layer to provide reusable and maintainable test payloads. This helps keep test data consistent across API, UI, and integration tests.
+
+---
+
+### 2. API Test Suite
+Add a dedicated API testing layer covering core backend functionality.
+
+Example structure:
+
+tests/
+    api/
+    ui/
+    integration/
+
+The API test suite will include:
+
+- positive API scenarios
+- negative validation tests
+- authentication flows
+- user lifecycle tests (create / login / delete)
+
+This demonstrates backend testing capabilities in addition to UI automation.
+
+---
+
+### 3. API Schema Validation
+Validate API responses using typed schema models to ensure response structure and data types match the expected contract.
+
+Planned implementation:
+
+- `pydantic` models for response validation
+- validation of required fields and data types
+- improved API contract verification
+
+Example structure:
+
+schemas/
+    user_schema.py
+
+This approach strengthens API tests by verifying not only response status but also response structure.
+
+---
+
+### 4. Allure Reporting
+Integrate **Allure reporting** to provide detailed and readable test execution reports.
+
+Planned report features:
+
+- step-by-step test execution
+- screenshots on failure
+- API request / response attachments
+- execution timeline
+
+This improves test observability and debugging in both local and CI environments.
+
+---
+
+### 5. Test Markers
+Introduce Pytest markers for better test organization and selective execution.
+
+Planned markers:
+
+- `api`
+- `ui`
+- `integration`
+- `smoke`
+- `regression`
+
+Example usage:
+
+pytest -m smoke  
+pytest -m api  
+
+This allows flexible test execution strategies depending on testing scope.
