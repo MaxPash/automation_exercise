@@ -43,6 +43,7 @@ This structure separates **test logic, page interactions, configuration, and uti
 - Environment configuration support
 - CI-ready project structure
 - Clear separation between test logic and page objects
+- Project coding rules for contributors and AI are in [`.cursor/rules/`](.cursor/rules/)
 
 ---
 

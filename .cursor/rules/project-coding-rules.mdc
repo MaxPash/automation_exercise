@@ -1,0 +1,45 @@
+---
+description: Project coding rules - style, architecture, tests, reuse, fixtures, POM
+alwaysApply: true
+---
+
+# Project Coding Rules
+
+This project is a learning-oriented automation framework. Prioritize code clarity and architectural understanding.
+
+## 1. Code Style – Prioritize Readability
+
+- Write **clear and explicit code**; avoid unnecessary abstractions.
+- Avoid overly clever or condensed solutions; prefer readability over minimal lines.
+- Use **descriptive variable and function names**.
+- Break logic into **small, understandable functions**.
+
+## 2. Follow Existing Architecture
+
+- Follow the **existing project structure** (tests/, framework/pages/, framework/config/, framework/utils/, framework/fixtures/).
+- Do **not** introduce new architectural layers unless requested.
+- **Reuse** existing modules, fixtures, and utilities.
+- Use existing fixtures (e.g. from conftest.py, framework/fixtures/) and existing API clients (e.g. framework/api/).
+
+## 3. Keep Tests Simple and Explicit
+
+- Keep tests **short and readable**.
+- Follow **BDD-style** structure (Given/When/Then or clear arrange/act/assert).
+- Avoid complex test logic; **test behavior, not implementation details**.
+
+## 4. Reuse Existing Utilities
+
+- Before adding new helper functions, **check** if a similar utility already exists (e.g. in framework/utils/helper.py).
+- Prefer **reusing** existing helpers (e.g. load_signup_payload, generate_email).
+- Avoid creating **duplicate logic**.
+
+## 5. Reuse Existing Pytest Fixtures
+
+- Prefer fixtures from **conftest.py** (e.g. url, signup_data) and **framework/fixtures/** (pages_fixture, api_fixture).
+- Avoid **duplicating** fixture logic; inject or compose existing fixtures where possible.
+
+## 6. Respect Page Object Model
+
+- Put **UI interactions** in page classes under **framework/pages/** (e.g. LoginPage, SignupPage).
+- Keep **tests** focused on flow and assertions; delegate selectors and actions to page objects.
+- Follow the existing pattern: pages inherit from BasePage and expose clear methods for actions and checks.
