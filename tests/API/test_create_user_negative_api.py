@@ -1,18 +1,22 @@
 """Negative API tests for create user endpoint."""
 
+from framework.api.user_api import UserAPI
 from framework.data.user_factory import UserFactory
-from framework.flows.api_user_flows import ApiUserFlows
 
 
-def test_create_user_with_invalid_email_returns_error(api_user_flows: ApiUserFlows):
-    """Create user with invalid email; API must return error response code."""
+def test_create_user_with_invalid_email_returns_error(user_api: UserAPI):
+    """Create user with invalid email; verify HTTP 200 and body indicates error (responseCode != 201)."""
     payload = UserFactory.invalid_email_user()
-    result = api_user_flows.create_user_response(payload)
-    assert result.responseCode != 201
+    response = user_api.create_user(payload)
+    assert response.status == 200  # API returns 200; error is in body
+    body = response.json()
+    assert body.get("responseCode") != 201
 
 
-def test_create_user_with_empty_password_returns_error(api_user_flows: ApiUserFlows):
-    """Create user with empty password; API must return error response code."""
+def test_create_user_with_empty_password_returns_error(user_api: UserAPI):
+    """Create user with empty password; verify HTTP 200 and body indicates error (responseCode != 201)."""
     payload = UserFactory.empty_password_user()
-    result = api_user_flows.create_user_response(payload)
-    assert result.responseCode != 201
+    response = user_api.create_user(payload)
+    assert response.status == 200  # API returns 200; error is in body
+    body = response.json()
+    assert body.get("responseCode") != 201

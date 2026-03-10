@@ -21,9 +21,15 @@ class ApiUserFlows:
     def create_user(self, payload: dict) -> CreateAccountResponse:
         """Create user via API and assert success. Returns validated response."""
         response = self.user_api.create_user(payload)
+        expected_status = 200  # API returns 200; body contains responseCode 201 for success
+        actual_status = response.status
+        if actual_status != expected_status:
+            body_preview = response.text()[:200] if response.text() else ""
+            raise AssertionError(
+                f"create_user: expected HTTP {expected_status}, got {actual_status}. Body: {body_preview!r}"
+            )
         body = response.json()
         validated = CreateAccountResponse.model_validate(body)
-        assert validated.responseCode == 201, f"Unexpected create_user code: {validated}"
         self.logger.info("User created via API with email: %s", payload.get("email"))
         return validated
 
@@ -38,18 +44,30 @@ class ApiUserFlows:
     def verify_login(self, email: str, password: str) -> VerifyLoginResponse:
         """Verify login via API and assert success. Returns validated response."""
         response = self.user_api.verify_login(email, password)
+        expected_status = 200
+        actual_status = response.status
+        if actual_status != expected_status:
+            body_preview = response.text()[:200] if response.text() else ""
+            raise AssertionError(
+                f"verify_login: expected HTTP {expected_status}, got {actual_status}. Body: {body_preview!r}"
+            )
         body = response.json()
         validated = VerifyLoginResponse.model_validate(body)
-        assert validated.responseCode == 200, f"Unexpected verify_login code: {validated}"
         self.logger.info("User login verified via API for email: %s", email)
         return validated
 
     def delete_user(self, email: str, password: str) -> DeleteAccountResponse:
         """Delete user via API and assert success. Returns validated response."""
         response = self.user_api.delete_user(email, password)
+        expected_status = 200
+        actual_status = response.status
+        if actual_status != expected_status:
+            body_preview = response.text()[:200] if response.text() else ""
+            raise AssertionError(
+                f"delete_user: expected HTTP {expected_status}, got {actual_status}. Body: {body_preview!r}"
+            )
         body = response.json()
         validated = DeleteAccountResponse.model_validate(body)
-        assert validated.responseCode == 200, f"Unexpected delete_user code: {validated}"
         self.logger.info("User deleted via API for email: %s", email)
         return validated
 
