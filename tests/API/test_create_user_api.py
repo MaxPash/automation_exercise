@@ -10,10 +10,10 @@ def test_create_user_returns_201(api_user_flows: ApiUserFlows):
     payload = UserFactory.valid_user()
 
     # When: create user via API
-    response = api_user_flows.create_user(payload)
+    result = api_user_flows.create_user(payload)
 
     # Then: response code is 201
-    assert response.json().get("responseCode") == 201
+    assert result.responseCode == 201
 
     # Cleanup: delete user to keep tests isolated
     api_user_flows.delete_user(payload["email"], payload["password"])

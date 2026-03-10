@@ -2,3 +2,4 @@ pytest
 python-dotenv
 pytest-playwright
 pytest-html
+pydantic>=2.0
