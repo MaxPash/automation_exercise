@@ -11,6 +11,10 @@ __pycache__/
 .pytest_cache/
 pytest.local.ini
 
+# Allure
+allure-results/
+allure-report/
+
 # Playwright
 test-results/
 tests/test-results/

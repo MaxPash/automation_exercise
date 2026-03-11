@@ -32,12 +32,25 @@ jobs:
           pip3 install pytest-playwright  
           python3 -m playwright install chromium
 
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
       - name: Run tests
         run: |
           pytest \
             --junitxml=pytest-report.xml \
             --html=report.html \
-            --self-contained-html
+            --self-contained-html \
+            --alluredir=allure-results
+
+      - name: Install Allure CLI
+        run: npm install -g allure-commandline
+
+      - name: Generate Allure report
+        if: always()
+        run: allure generate allure-results -o allure-report --clean
 
       - name: Upload test results
         if: always()
@@ -61,4 +74,12 @@ jobs:
         with:
           name: html-report
           path: report.html
+          if-no-files-found: ignore
+
+      - name: Upload Allure report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-report
+          path: allure-report/
           if-no-files-found: ignore
