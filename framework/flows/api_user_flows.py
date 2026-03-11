@@ -30,6 +30,10 @@ class ApiUserFlows:
             )
         body = response.json()
         validated = CreateAccountResponse.model_validate(body)
+        if validated.responseCode != 201:
+            raise AssertionError(
+                f"create_user: expected responseCode 201, got {validated.responseCode}"
+            )
         self.logger.info("User created via API with email: %s", payload.get("email"))
         return validated
 
@@ -53,6 +57,10 @@ class ApiUserFlows:
             )
         body = response.json()
         validated = VerifyLoginResponse.model_validate(body)
+        if validated.responseCode != 200:
+            raise AssertionError(
+                f"verify_login: expected responseCode 200, got {validated.responseCode}"
+            )
         self.logger.info("User login verified via API for email: %s", email)
         return validated
 
@@ -68,6 +76,10 @@ class ApiUserFlows:
             )
         body = response.json()
         validated = DeleteAccountResponse.model_validate(body)
+        if validated.responseCode != 200:
+            raise AssertionError(
+                f"delete_user: expected responseCode 200, got {validated.responseCode}"
+            )
         self.logger.info("User deleted via API for email: %s", email)
         return validated
 
