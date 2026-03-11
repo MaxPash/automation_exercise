@@ -70,6 +70,13 @@ jobs:
         if: always()
         uses: actions/deploy-pages@v4
 
+      - name: Add Allure link to summary
+        if: always()
+        run: |
+          echo "## Allure Report" >> $GITHUB_STEP_SUMMARY
+          echo "Live report:" >> $GITHUB_STEP_SUMMARY
+          echo "https://maxpash.github.io/automation_exercise/" >> $GITHUB_STEP_SUMMARY
+
       - name: Upload test results
         if: always()
         uses: actions/upload-artifact@v4
