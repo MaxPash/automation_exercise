@@ -1,5 +1,6 @@
 import pytest
 
+from framework.api.brands_api import BrandsAPI
 from framework.api.products_api import ProductsAPI
 from framework.api.user_api import UserAPI
 from framework.config.env_selection import get_url
@@ -26,6 +27,11 @@ def user_api(api_context) -> UserAPI:
 @pytest.fixture
 def products_api(api_context) -> ProductsAPI:
     return ProductsAPI(api_context)
+
+
+@pytest.fixture
+def brands_api(api_context) -> BrandsAPI:
+    return BrandsAPI(api_context)
 
 
 @pytest.fixture

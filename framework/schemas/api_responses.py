@@ -61,6 +61,23 @@ class ProductsListResponse(BaseModel):
     products: list[Product]
 
 
+# --- Brands List API (GET /api/brandsList) ---
+
+
+class Brand(BaseModel):
+    """Single brand from GET /api/brandsList."""
+
+    id: int
+    brand: str
+
+
+class BrandsListResponse(BaseModel):
+    """Response for GET /api/brandsList. responseCode 200, brands list."""
+
+    responseCode: int
+    brands: list[Brand]
+
+
 class MessageResponse(BaseModel):
     """Generic response with responseCode and message (e.g. 405 Method Not Allowed)."""
 
