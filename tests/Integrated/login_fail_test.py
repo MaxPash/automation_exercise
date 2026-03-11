@@ -9,6 +9,9 @@ def test_login_with_invalid_credentials(pages, api_user_flows: ApiUserFlows, sig
     email, password = api_user_flows.create_unique_user(payload)
     pages.base.open_home(url)
     pages.login.open()
+    pages.base.go_to_products()
+    pages.base.close_add()
+    pages.login.open()
     
     # When: Fill invalid credentials and submit
     pages.login.log_in(email, "invalid_password")

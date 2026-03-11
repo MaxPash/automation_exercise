@@ -12,6 +12,7 @@ class BasePage:
         self._accept_cookies_btn = page.get_by_role("button", name="Consent")
         self._delete_account_btn = page.get_by_role("listitem").filter(has_text="Delete Account")
         self._log_out_btn = page.get_by_role("listitem").filter(has_text="Logout")
+        self._products_btn = page.get_by_role("listitem").filter(has_text="Products")
 
     def navigate(self, url: str) -> None:
         self.page.goto(url)
@@ -54,3 +55,6 @@ class BasePage:
         expect(self._log_out_btn).to_be_visible()
         self._log_out_btn.click()
         expect(self.page).to_have_title("Automation Exercise - Signup / Login")
+    
+    def go_to_products(self) -> None:
+        self._products_btn.click()
