@@ -42,6 +42,69 @@ def test_post_products_list_returns_405(products_api: ProductsAPI):
     response = products_api.post_products_list()
 
     # Then: response body indicates method not allowed (server may return HTTP 200 with responseCode 405)
+    assert response.status == 200
     body = MessageResponse.model_validate(response.json())
     assert body.responseCode == 405
     assert body.message == "This request method is not supported."
+
+
+# --- Search Product API (POST /api/searchProduct) ---
+
+
+def test_search_product_returns_results(products_api: ProductsAPI):
+    """POST /api/searchProduct with valid term returns 200 and products list."""
+    # When: search with existing term (e.g. "top")
+    response = products_api.search_product("top")
+
+    # Then: success and list of products (non-empty for this query)
+    assert response.status == 200
+    body = ProductsListResponse.model_validate(response.json())
+    assert body.responseCode == 200
+    assert len(body.products) > 0
+
+
+def test_search_product_results_match_query(products_api: ProductsAPI):
+    """POST /api/searchProduct results contain the search term in name, brand or category."""
+    # When: search for "tshirt"
+    response = products_api.search_product("tshirt")
+
+    # Then: each product has query substring in name, brand or category
+    assert response.status == 200
+    body = ProductsListResponse.model_validate(response.json())
+    assert body.responseCode == 200
+    query = "tshirt"
+    query_lower = query.lower()
+    for product in body.products:
+        searchable = [
+            product.name,
+            product.brand,
+            product.category.category,
+            product.category.usertype.usertype,
+        ]
+        assert any(
+            query_lower in (s or "").lower() for s in searchable
+        ), f"Product {product.name} does not contain '{query}' in name, brand or category"
+
+
+def test_search_product_no_results(products_api: ProductsAPI):
+    """POST /api/searchProduct with non-matching term returns 200 and empty products list."""
+    # When: search for term that matches nothing
+    response = products_api.search_product("nonexistentxyz123")
+
+    # Then: success with empty products list
+    assert response.status == 200
+    body = ProductsListResponse.model_validate(response.json())
+    assert body.responseCode == 200
+    assert len(body.products) == 0
+
+
+def test_search_product_empty_query(products_api: ProductsAPI):
+    """POST /api/searchProduct without search_product returns 400 and expected message."""
+    # When: POST without search_product parameter (API 6)
+    response = products_api.search_product_without_param()
+
+    # Then: response body indicates bad request (server may return HTTP 200 with responseCode 400)
+    assert response.status == 200
+    body = MessageResponse.model_validate(response.json())
+    assert body.responseCode == 400
+    assert body.message == "Bad request, search_product parameter is missing in POST request."
