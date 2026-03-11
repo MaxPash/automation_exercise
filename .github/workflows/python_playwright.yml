@@ -50,14 +50,15 @@ jobs:
             --html=report.html \
             --self-contained-html \
             --alluredir=allure-results
+        continue-on-error: true
 
       - name: Install Allure CLI
+        if: always()
         run: npm install -g allure-commandline
 
       - name: Generate Allure report
         if: always()
         run: |
-          export PATH="$(npm bin -g):$PATH"
           allure generate allure-results -o allure-report --clean
 
       - name: Upload Pages artifact
