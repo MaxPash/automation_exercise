@@ -1,5 +1,6 @@
 import pytest
 
+from framework.api.products_api import ProductsAPI
 from framework.api.user_api import UserAPI
 from framework.config.env_selection import get_url
 from framework.flows.api_user_flows import ApiUserFlows
@@ -20,6 +21,11 @@ def api_context(playwright):
 @pytest.fixture
 def user_api(api_context) -> UserAPI:
     return UserAPI(api_context)
+
+
+@pytest.fixture
+def products_api(api_context) -> ProductsAPI:
+    return ProductsAPI(api_context)
 
 
 @pytest.fixture

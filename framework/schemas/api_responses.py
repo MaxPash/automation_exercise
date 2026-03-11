@@ -26,3 +26,43 @@ class DeleteAccountResponse(BaseModel):
 
     responseCode: int
     message: str
+
+
+# --- Products List API (GET /api/productsList) ---
+
+
+class ProductCategoryUsertype(BaseModel):
+    """Nested usertype inside product category."""
+
+    usertype: str
+
+
+class ProductCategory(BaseModel):
+    """Product category with usertype and category name."""
+
+    usertype: ProductCategoryUsertype
+    category: str
+
+
+class Product(BaseModel):
+    """Single product from GET /api/productsList."""
+
+    id: int
+    name: str
+    price: str
+    brand: str
+    category: ProductCategory
+
+
+class ProductsListResponse(BaseModel):
+    """Response for GET /api/productsList. responseCode 200, products list."""
+
+    responseCode: int
+    products: list[Product]
+
+
+class MessageResponse(BaseModel):
+    """Generic response with responseCode and message (e.g. 405 Method Not Allowed)."""
+
+    responseCode: int
+    message: str
