@@ -3,13 +3,14 @@ from playwright.sync_api import Page
 from playwright.sync_api import TimeoutError as PlaywrightTimeoutError
 from playwright.sync_api import expect
 
+from framework.utils.popup import close_ad_popup
+
 
 class BasePage:
     def __init__(self, page: Page):
         self.page = page
         self._accept_cookies_btn = page.get_by_role("button", name="Consent")
         self._delete_account_btn = page.get_by_role("listitem").filter(has_text="Delete Account")
-        self._close_add_btn = page.locator("iframe[name=\"aswift_2\"]").content_frame.locator("iframe[name=\"ad_iframe\"]").content_frame.get_by_role("button", name="Close ad")
         self._log_out_btn = page.get_by_role("listitem").filter(has_text="Logout")
 
     def navigate(self, url: str) -> None:
@@ -43,7 +44,8 @@ class BasePage:
         self._delete_account_btn.click()
 
     def close_add(self) -> None:
-        self._close_add_btn.click()
+        """Close ad popup if present, using multiple possible close button locators."""
+        close_ad_popup(self.page)
 
     def should_have_base_title(self) -> None:
         expect(self.page).to_have_title("Automation Exercise")
