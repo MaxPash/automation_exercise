@@ -55,12 +55,15 @@ jobs:
           export PATH="$(npm bin -g):$PATH"
           allure generate allure-results -o allure-report --clean
 
-      - name: Deploy Allure report to GitHub Pages
+      - name: Upload Pages artifact
         if: always()
-        uses: peaceiris/actions-gh-pages@v4
+        uses: actions/upload-pages-artifact@v3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./allure-report
+          path: ./allure-report
+
+      - name: Deploy to GitHub Pages
+        if: always()
+        uses: actions/deploy-pages@v4
 
       - name: Upload test results
         if: always()
