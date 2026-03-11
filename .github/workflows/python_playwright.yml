@@ -51,7 +51,9 @@ jobs:
 
       - name: Generate Allure report
         if: always()
-        run: allure generate allure-results -o allure-report --clean
+        run: |
+          export PATH="$(npm bin -g):$PATH"
+          allure generate allure-results -o allure-report --clean
 
       - name: Upload test results
         if: always()
