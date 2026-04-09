@@ -42,7 +42,7 @@ jobs:
 
       - name: Run tests
         run: |
-          pytest \
+          pytest -n 2 \
             --junitxml=pytest-report.xml \
             --html=report.html \
             --self-contained-html \
