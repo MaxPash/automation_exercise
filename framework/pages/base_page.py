@@ -1,4 +1,5 @@
 import logging
+import time
 from playwright.sync_api import Page
 from playwright.sync_api import TimeoutError as PlaywrightTimeoutError
 from playwright.sync_api import expect
@@ -15,7 +16,33 @@ class BasePage:
         self._products_btn = page.get_by_role("listitem").filter(has_text="Products")
 
     def navigate(self, url: str) -> None:
-        self.page.goto(url)
+        max_attempts = 3
+        last_error = None
+
+        for attempt in range(1, max_attempts + 1):
+            logging.info("Navigate attempt %s/%s to %s", attempt, max_attempts, url)
+            try:
+                self.page.goto(
+                    url,
+                    wait_until="domcontentloaded",
+                    timeout=60000,
+                )
+                logging.info("Navigation successful on attempt %s to %s", attempt, url)
+                return
+            except PlaywrightTimeoutError as error:
+                last_error = error
+                logging.warning(
+                    "Navigate timeout on attempt %s/%s for %s: %s",
+                    attempt,
+                    max_attempts,
+                    url,
+                    error,
+                )
+                if attempt < max_attempts:
+                    time.sleep(2)
+
+        logging.error("Navigation failed after %s attempts for %s", max_attempts, url)
+        raise last_error
 
     def get_title(self) -> str:
         return self.page.title()
