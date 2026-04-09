@@ -26,10 +26,10 @@ jobs:
           pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Install Node.js and npm
+      - name: Install Node.js, npm, and Java
         run: |
           apt-get update
-          apt-get install -y nodejs npm
+          apt-get install -y nodejs npm default-jre
 
       - name: Verify runtime versions
         run: |
@@ -37,6 +37,8 @@ jobs:
           python -c "import sys; print(sys.version)"
           pip --version
           node --version
+          npm --version
+          java --version
 
       - name: Run tests
         run: |
