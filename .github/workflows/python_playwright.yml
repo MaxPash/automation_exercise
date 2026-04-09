@@ -26,6 +26,13 @@ jobs:
           pip install --upgrade pip
           pip install -r requirements.txt
 
+      - name: Verify runtime versions
+        run: |
+          python --version
+          python -c "import sys; print(sys.version)"
+          pip --version
+          node --version
+
       - name: Run tests
         run: |
           pytest \
