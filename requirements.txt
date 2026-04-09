@@ -2,6 +2,7 @@ pytest
 python-dotenv
 pytest-playwright==0.7.2
 pytest-html
+pytest-xdist==3.8.0
 allure-pytest
 pydantic>=2.0
 playwright==1.58.0
