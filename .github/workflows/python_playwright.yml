@@ -6,6 +6,7 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    container: mcr.microsoft.com/playwright/python:v1.58.0
 
     permissions:
       pages: write
@@ -18,34 +19,30 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.14'
-
-      - name: Install pip3
-        run: sudo apt-get install python3-pip
+        uses: actions/checkout@v4
 
       - name: Install dependencies
-        run: |  
-          pip3 install --upgrade pip  
-          pip3 install -r requirements.txt  
+        run: |
+          pip install --upgrade pip
+          pip install -r requirements.txt
 
-      - name: Install Playwright and dependencies
-        run: |  
-          pip3 install pytest-playwright  
-          python3 -m playwright install chromium
+      - name: Install Node.js, npm, and Java
+        run: |
+          apt-get update
+          apt-get install -y nodejs npm default-jre
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '24'
+      - name: Verify runtime versions
+        run: |
+          python --version
+          python -c "import sys; print(sys.version)"
+          pip --version
+          node --version
+          npm --version
+          java --version
 
       - name: Run tests
         run: |
-          pytest \
+          xvfb-run pytest -n 1 \
             --junitxml=pytest-report.xml \
             --html=report.html \
             --self-contained-html \
